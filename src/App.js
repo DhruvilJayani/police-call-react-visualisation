@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import LookerEmbed from './LookerEmbed';
+import StreamlitEmbed from './StreamlitEmbed';
+import DataFilter from './DataFilter';
 
 function App() {
+  const [filterValue, setFilterValue] = useState('');
+
+  const handleFilterChange = (newFilterValue) => {
+    setFilterValue(newFilterValue);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Data Visualization App with Looker Studio</h1>
+      
+      {/* Filter Dropdown */}
+      <DataFilter onFilterChange={handleFilterChange} />
+
+      {/* Embed Looker Studio with optional query params */}
+      <LookerEmbed filter={filterValue} />
+      <StreamlitEmbed filter={filterValue} />
     </div>
   );
 }
