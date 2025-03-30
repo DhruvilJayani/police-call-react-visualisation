@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import './App.css';
 import LookerEmbed from './LookerEmbed';
 import StreamlitEmbed from './StreamlitEmbed';
+import StreamlitEmbedMap from './StreamlitEmbedMap';
 import DataFilter from './DataFilter';
 
 function App() {
+  const [filter, setFilter] = useState('');
   const [filterValue, setFilterValue] = useState('');
 
-  const handleFilterChange = (newFilterValue) => {
-    setFilterValue(newFilterValue);
+  const handleFilterChange = (newFilter, newValue) => {
+    setFilter(newFilter);
+    setFilterValue(newValue);
   };
 
   return (
@@ -18,9 +21,12 @@ function App() {
       {/* Filter Dropdown */}
       <DataFilter onFilterChange={handleFilterChange} />
 
-      {/* Embed Looker Studio with optional query params */}
-      <LookerEmbed filter={filterValue} />
-      <StreamlitEmbed filter={filterValue} />
+      {/* Embed Looker Studio and Streamlit with filters */}
+      <LookerEmbed filter={filter} filterValue={filterValue} />
+      <StreamlitEmbed filter={filter} filterValue={filterValue} />
+      
+      {/* Embed the Map Streamlit app with filters */}
+      <StreamlitEmbedMap filter={filter} filterValue={filterValue} />
     </div>
   );
 }

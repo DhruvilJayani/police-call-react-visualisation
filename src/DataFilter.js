@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 
 const DataFilter = ({ onFilterChange }) => {
   const [selectedFilter, setSelectedFilter] = useState('');
+  const [filterValue, setFilterValue] = useState('');
 
   const handleFilterChange = (e) => {
     setSelectedFilter(e.target.value);
-    onFilterChange(e.target.value);  // Trigger parent component with the new filter
+    onFilterChange(e.target.value, filterValue);
+  };
+
+  const handleValueChange = (e) => {
+    setFilterValue(e.target.value);
+    onFilterChange(selectedFilter, e.target.value);
   };
 
   const filterOptions = [
@@ -27,6 +33,15 @@ const DataFilter = ({ onFilterChange }) => {
           </option>
         ))}
       </select>
+
+      {selectedFilter && (
+        <input
+          type="text"
+          placeholder="Enter filter value"
+          value={filterValue}
+          onChange={handleValueChange}
+        />
+      )}
     </div>
   );
 };
